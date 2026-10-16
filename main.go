@@ -5,6 +5,7 @@ import (
     "net/http"
     "os"
     "path/filepath"
+    "strings"
 )
 
 const m3uFolder = "/home/content/strm/live"
@@ -28,12 +29,16 @@ func handleM3U(w http.ResponseWriter, r *http.Request) {
         if info.IsDir() {
             return nil
         }
-        if filepath.Ext(path) == ".m3u" {
+
+        ext := strings.ToLower(filepath.Ext(path))
+        if ext == ".m3u" || ext == ".m3u8" {
             data, readErr := os.ReadFile(path)
             if readErr != nil {
                 log.Println("Error reading", path, readErr)
                 return nil
             }
+
+            // Write file contents
             _, _ = w.Write(data)
             _, _ = w.Write([]byte("\n"))
         }

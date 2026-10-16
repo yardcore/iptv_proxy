@@ -7,7 +7,7 @@ import (
     "path/filepath"
 )
 
-const m3uFolder = "/home/content/m3u"
+const m3uFolder = "/home/content/strm/live"
 
 func main() {
     http.HandleFunc("/m3u", handleM3U)
